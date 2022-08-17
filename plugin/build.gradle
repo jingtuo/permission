@@ -28,24 +28,27 @@ dependencies {
 
 //发布到Gradle Plugin Portal需要的配置
 group = 'io.github.jingtuo'
-version = '1.0'
+version = '1.1'
 
-def pluginName = "Statistics Permission For Android App"
+def pluginName = "Permission Plugin For Android Application/Library"
 def pluginDescription = "Statistics permissions by parsing the 'uses-permission' tag of the AndroidManifest.xml file"
 
+def siteUrl = "https://jingtuo.github.io/permission/"
+def githubUrl = "https://github.com/jingtuo/permission"
+def gitHttpUrl = "https://github.com/jingtuo/permission.git"
 
 pluginBundle {
     // Set the website for your plugin’s project.
-    website = 'https://github.com/jingtuo/statistics-permission'
+    website = siteUrl
     // Provide the source repository URI so that others can find it if they want to contribute.
-    vcsUrl = 'https://github.com/jingtuo/statistics-permission.git'
+    vcsUrl = gitHttpUrl
     tags = ['Android', 'Permission']
 }
 
 gradlePlugin {
     // Define the plugin
     plugins {
-        statisticsPermissionPlugin {
+        permissionPlugin {
             id = 'io.github.jingtuo.permission'
             displayName = pluginName
             description = pluginDescription
@@ -107,9 +110,9 @@ publishing {
                 }
 
                 scm {
-                    connection = 'git@github.com:jingtuo/statistics-permission.git'
-                    developerConnection = 'git@github.com:jingtuo/statistics-permission.git'
-                    url = 'https://github.com/jingtuo/statistics-permission'
+                    connection = githubUrl
+                    developerConnection = gitHttpUrl
+                    url = siteUrl
                 }
             }
 

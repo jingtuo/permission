@@ -20,6 +20,22 @@ Statistics Permission Plugin主要为了统计Android应用的权限。
 ### 配置
 
 ```groovy
+buildscript {
+   repositories {
+      maven {
+         url ''
+      }
+   }
+
+   dependencies {
+      //1.0版本: classpath 'io.github.jingtuo:statistics-permission:1.0'
+      classpath 'io.github.jingtuo:permission:1.1'
+   }
+}
+```
+
+
+```groovy
 //应用之后，如果是Android Application/Library，会创建一个task: statistics工程名(App)Permission
 apply plugin: "io.github.jingtuo.permission"
 
@@ -31,6 +47,8 @@ statisticsPermission {
     dataExportRelativePath = ""
 }
 ```
+
+> Gradle maven仓库对插件id有要求, io.github.jingtuo需要有对应的域名https://jingtuo.github.io/
 
 ### 执行任务
 
@@ -54,6 +72,10 @@ statisticsPermission {
 
 ## 版本
 
+### 1.1
+
+1. artifactId从statistics-permission修改为permission
+
 ### 1.0
 
 1. 分析使用权限的工程、依赖库
@@ -64,8 +86,6 @@ statisticsPermission {
 ```shell
 ./gradlew.bat publish
 ```
-
-部署到本地之后，发现本地仓库: pers/jingtuo/android目录有三个子目录: plugin、statistics、statistics-permission，不得所以然
 
 ## 问题
 
@@ -89,3 +109,4 @@ statisticsPermission {
 
 - [Maven Publish Plugin](https://docs.gradle.org/current/userguide/publishing_maven.html)
 - [Publish Gradle Plugin](https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html)
+- [Github Pages Quick Start](https://docs.github.com/cn/pages/quickstart)
