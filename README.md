@@ -19,17 +19,26 @@ Statistics Permission Plugin主要为了统计Android应用的权限。
 
 ### 配置
 
+Gradle插件引入-新方式:
+```groovy
+plugins {
+  id "io.github.jingtuo.permission" version "1.1"
+}
+```
+
+Gradle插件引入-旧方式
 ```groovy
 buildscript {
    repositories {
       maven {
-         url ''
+         url "https://plugins.gradle.org/m2/"
       }
    }
 
    dependencies {
-      //1.0版本: classpath 'io.github.jingtuo:statistics-permission:1.0'
-      classpath 'io.github.jingtuo:permission:1.1'
+      //发布gradle的maven仓库, artifactId默认使用了工程名(plugin)
+      //发布到本地仓库, 插件maven-publish根据publishing任务中定义的artifactId生成一个, 插件com.gradle.plugin-publish根据工程名(plugin)生成一个
+      classpath "io.github.jingtuo:plugin:1.1"
    }
 }
 ```
