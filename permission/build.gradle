@@ -28,7 +28,8 @@ dependencies {
 
 //发布到Gradle Plugin Portal需要的配置
 group = 'io.github.jingtuo'
-version = '1.1'
+version = '1.2'
+//发布到Gradle Maven仓库时会使用工程名称作为artifactId
 
 def pluginName = "Permission Plugin For Android Application/Library"
 def pluginDescription = "Statistics permissions by parsing the 'uses-permission' tag of the AndroidManifest.xml file"
@@ -48,7 +49,7 @@ pluginBundle {
 gradlePlugin {
     // Define the plugin
     plugins {
-        permissionPlugin {
+        permission {
             id = 'io.github.jingtuo.permission'
             displayName = pluginName
             description = pluginDescription
@@ -86,8 +87,17 @@ tasks.named('test') {
 
 // 发布到本地
 publishing {
+    //MavenPluginPublishPlugin会生成一个pluginMaven的publication
+
+    //MavenPluginPublishPlugin会根据'gradlePlugin.plugins.插件名'的插件名生成一个publication
+    //如插件名是permission, 则会生成一个permissionPluginMarkerMaven
+    //详见: MavenPluginPublishPlugin
+
+    //每一个publication都会生成发布任务
+    //如publication是permission
+    //则生成一个publishPermissionPublicationTo仓库(repositories每有一个仓库配置, 便有一个)
     publications {
-        maven(MavenPublication) {
+        permission(MavenPublication) {
             artifactId = "permission"
             from components.java
             pom {
@@ -120,8 +130,8 @@ publishing {
     }
     repositories {
         maven {
-            name = 'localPluginRepository'
-            url = System.getProperty("user.home") + "/.gradle/localPluginRepository"
+            name = 'localPlugin'
+            url = System.getProperty("user.home") + "/.gradle/localPlugin"
         }
     }
 }

@@ -93,7 +93,7 @@ statisticsPermission {
 ## Publish To Local
 
 ```shell
-./gradlew.bat publish
+./gradlew.bat publishPermissionPublicationToLocalPlugin
 ```
 
 ## 问题
