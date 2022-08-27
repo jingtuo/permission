@@ -5,6 +5,8 @@
 Statistics Permission Plugin主要为了统计Android应用的权限。
 经常遇到Android应用依赖许多模块(module)、依赖库(.aar)，本插件的目的是分析权限是被哪个模块引入的及其必要性。
 
+[io.github.jingtuo.permission](https://plugins.gradle.org/plugin/io.github.jingtuo.permission)
+
 > 通过这个插件的开发，积累插件开发经验
 
 ## 思路
@@ -22,7 +24,7 @@ Statistics Permission Plugin主要为了统计Android应用的权限。
 Gradle插件引入-新方式:
 ```groovy
 plugins {
-  id "io.github.jingtuo.permission" version "1.1"
+   id "io.github.jingtuo.permission" version "1.2"
 }
 ```
 
@@ -36,9 +38,10 @@ buildscript {
    }
 
    dependencies {
-      //发布gradle的maven仓库, artifactId默认使用了工程名(plugin)
-      //发布到本地仓库, 插件maven-publish根据publishing任务中定义的artifactId生成一个, 插件com.gradle.plugin-publish根据工程名(plugin)生成一个
-      classpath "io.github.jingtuo:plugin:1.1"
+      //发布gradle的maven仓库, artifactId默认使用了当前工程名
+      //发布到本地仓库, 插件maven-publish根据publishing.publications.publication.artifactId生成一个发布包
+      //插件com.gradle.plugin-publish根据工程名生成一个publishing.publications.permissionPluginMarkerMaven
+      classpath "io.github.jingtuo:permission:1.2"
    }
 }
 ```
@@ -79,7 +82,31 @@ statisticsPermission {
 - user表示权限的使用者
 - user_type表示使用者是工程还是依赖库
 
+## 权限
+
+### CALL_PHONE
+
+[android.permission.CALL_PHONE](https://developer.android.google.cn/reference/android/Manifest.permission#CALL_PHONE)用于直接呼叫号码。
+
+使用代码: [Intent.ACTION_CALL](https://developer.android.google.cn/reference/android/content/Intent?hl=en#ACTION_CALL)
+```kotlin
+//需要授权, 否则抛异常, 不支持直接呼叫紧急电话
+startActivity(Intent(Intent.ACTION_CALL, Uri.parse("tel:手机号码")))
+```
+> 课外知识: [ROLE_DIALER](https://developer.android.google.cn/reference/android/app/role/RoleManager#ROLE_DIALER)
+
+替代方案:
+```kotlin
+//ACTION_DIAL也可以换成ACTION_VIEW
+startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:手机号码")))
+```
+
+
 ## 版本
+
+### 1.2
+
+1. 解决发布到Gradle Maven仓库的artifactId是plugin(io.github.jingtuo:plugin:1.1)的问题
 
 ### 1.1
 
