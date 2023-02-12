@@ -1,21 +1,26 @@
-# Statistics Permission Plugin
+# Statistics Plugin
 
 ## 简介
 
-Statistics Permission Plugin主要为了统计Android应用的权限。
-经常遇到Android应用依赖许多模块(module)、依赖库(.aar)，本插件的目的是分析权限是被哪个模块引入的及其必要性。
+Statistics Plugin主要为了统计Android应用的一些信息：
+- 权限: 经常遇到Android应用依赖许多模块(module)、依赖库(.aar, .jar)，本插件的目的是统计模块引入的权限及其必要性。
+- 资源: 由于需求迭代、功能替换等不可控因素, 经常会产生许多无用图片，本插件的目的是统计图片的使用情况(主要是未使用的图片以及图片大小)。
 
-[io.github.jingtuo.permission](https://plugins.gradle.org/plugin/io.github.jingtuo.permission)
-
+> 旧版仅支持权限[io.github.jingtuo.permission](https://plugins.gradle.org/plugin/io.github.jingtuo.permission)
 > 通过这个插件的开发，积累插件开发经验
 
 ## 思路
 
+### 权限
+
 1. 解析AndroidManifest.xml文件中uses-permission，提取出来最终生成文件(.csv)。
 2. 针对依赖库的处理，基于build任务将依赖库下载到本地user.home/.gradle/caches/modules-2/files-2.1/，再通过插件解析这个目录下的依赖库
 
-
 > 由于Gradle官方不建议插件依赖过多三方库，所以就直接写到csv中
+
+### 图片
+
+1. 统计项目中drawable目录下的图片, 以及图片是否在Java或者Xml中被引用
 
 ## 使用
 
@@ -84,7 +89,11 @@ statisticsPermission {
 
 ## 权限
 
-### CALL_PHONE
+- Android 6.0(API 23)或者更高版本的设备, 使用[危险权限](https://developer.android.google.cn/guide/topics/permissions/overview#dangerous_permissions)之前需要确保是否有权限.
+- Android 5.1(API 22)或者更低版本的设备, 系统自动授权. (因为低版本是安装时校验权限, 如果不同意权限, 就安装不到设备上)
+- 普通权限, 系统自动授权.
+
+### CALL_PHONE 危险
 
 [android.permission.CALL_PHONE](https://developer.android.google.cn/reference/android/Manifest.permission#CALL_PHONE)用于直接呼叫号码。
 
@@ -101,8 +110,26 @@ startActivity(Intent(Intent.ACTION_CALL, Uri.parse("tel:手机号码")))
 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:手机号码")))
 ```
 
+### CHANGE_NETWORK_STATE 普通
+
+[android.permission.CHANGE_NETWORK_STATE](https://developer.android.google.cn/reference/android/Manifest.permission#CHANGE_NETWORK_STATE)
+
+使用代码: [ConnectivityManager.requestNetwork()](https://developer.android.google.cn/reference/kotlin/android/net/ConnectivityManager#requestnetwork)
+
+> 如果用户授权WRITE_SETTINGS也可以执行requestNetwork
+
+### WRITE_SETTINGS
+
+使用代码: 
+
+
+
 
 ## 版本
+
+### 1.0
+
+1. 引入统计图片功能, 功能
 
 ### 1.2
 

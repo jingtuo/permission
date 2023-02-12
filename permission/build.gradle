@@ -28,11 +28,14 @@ dependencies {
 
 //发布到Gradle Plugin Portal需要的配置
 group = 'io.github.jingtuo'
-version = '1.2'
+version = '1.0'
 //发布到Gradle Maven仓库时会使用工程名称作为artifactId
 
-def pluginName = "Permission Plugin For Android Application/Library"
-def pluginDescription = "Statistics permissions by parsing the 'uses-permission' tag of the AndroidManifest.xml file"
+def pluginName = "Statistics Plugin For Android Application/Library"
+def pluginDescription = """
+    1. Statistics permissions by parsing the 'uses-permission' tag of the AndroidManifest.xml file
+    2. Statistics Images by iterate through the project
+"""
 
 def siteUrl = "https://jingtuo.github.io/permission/"
 def githubUrl = "https://github.com/jingtuo/permission"
@@ -43,17 +46,17 @@ pluginBundle {
     website = siteUrl
     // Provide the source repository URI so that others can find it if they want to contribute.
     vcsUrl = gitHttpUrl
-    tags = ['Android', 'Permission']
+    tags = ['Android', 'Permission', 'Optimize']
 }
 
 gradlePlugin {
     // Define the plugin
     plugins {
-        permission {
-            id = 'io.github.jingtuo.permission'
+        statistics {
+            id = 'io.github.jingtuo.statistics'
             displayName = pluginName
             description = pluginDescription
-            implementationClass = 'io.github.jingtuo.permission.PermissionPlugin'
+            implementationClass = 'io.github.jingtuo.statistics.StatisticsPlugin'
         }
     }
 }
@@ -97,8 +100,8 @@ publishing {
     //如publication是permission
     //则生成一个publishPermissionPublicationTo仓库(repositories每有一个仓库配置, 便有一个)
     publications {
-        permission(MavenPublication) {
-            artifactId = "permission"
+        statistics(MavenPublication) {
+            artifactId = "statistics"
             from components.java
             pom {
                 name = pluginName

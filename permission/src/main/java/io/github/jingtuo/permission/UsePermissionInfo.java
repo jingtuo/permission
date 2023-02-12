@@ -4,10 +4,19 @@ import java.util.Objects;
 
 public class UsePermissionInfo {
 
+    /**
+     * 权限
+     */
     private String name;
 
+    /**
+     * 工程名
+     */
     private String user;
 
+    /**
+     * 工程类型: project, library
+     */
     private String userType;
 
     public UsePermissionInfo() {
